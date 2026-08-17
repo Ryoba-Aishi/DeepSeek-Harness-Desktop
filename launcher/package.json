@@ -1,0 +1,78 @@
+{
+  "name": "deepseek-harness-desktop",
+  "productName": "DeepSeek Harness",
+  "version": "1.0.0",
+  "description": "DeepSeek Harness Windows desktop launcher (self-contained)",
+  "main": "main.js",
+  "author": "RyobaAishi",
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win"
+  },
+  "build": {
+    "appId": "com.deepseek.harness.desktop",
+    "productName": "DeepSeek Harness",
+    "directories": {
+      "output": "../build/electron-out",
+      "buildResources": "../assets"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../runtime",
+        "to": "runtime",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "dir",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "../assets/whale.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "DeepSeek Harness",
+      "artifactName": "DeepSeek-Harness-Setup.exe",
+      "installerIcon": "../assets/whale.ico",
+      "uninstallerIcon": "../assets/whale.ico",
+      "installerHeaderIcon": "../assets/whale.ico"
+    },
+    "portable": {
+      "artifactName": "DeepSeek-Harness-Portable.exe"
+    }
+  },
+  "devDependencies": {
+    "electron": "^43.4.0",
+    "electron-builder": "^26.15.3"
+  }
+}

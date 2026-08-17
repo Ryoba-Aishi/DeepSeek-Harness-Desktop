@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:" />
+  <title>DeepSeek Harness - 启动失败</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0d1117; color: #c9d1d9;
+      font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+      display: flex; align-items: center; justify-content: center;
+      height: 100vh; padding: 40px;
+    }
+    .card { max-width: 760px; width: 100%; }
+    .logo { width: 64px; height: 64px; margin-bottom: 16px; }
+    h1 { font-size: 22px; color: #f85149; margin-bottom: 12px; }
+    .msg {
+      background: #161b22; border: 1px solid #30363d; border-radius: 8px;
+      padding: 16px 18px; white-space: pre-wrap; word-break: break-all;
+      font-size: 13px; line-height: 1.7; color: #e6edf3;
+    }
+    .tail {
+      margin-top: 14px; background: #0d1117; border: 1px solid #30363d;
+      border-radius: 8px; padding: 12px 14px;
+      font-family: Consolas, monospace; font-size: 12px; color: #8b949e;
+      white-space: pre-wrap; word-break: break-all; max-height: 260px; overflow: auto;
+    }
+    .tail-label { font-size: 12px; color: #8b949e; margin: 14px 0 6px; }
+    .actions { margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap; }
+    button {
+      background: #21262d; color: #e6edf3; border: 1px solid #30363d;
+      border-radius: 6px; padding: 9px 20px; font-size: 13px; cursor: pointer;
+    }
+    button:hover { background: #30363d; }
+    button.primary { background: #1f6feb; border-color: #1f6feb; color: #fff; }
+    button.primary:hover { background: #388bfd; }
+    .meta { margin-top: 16px; font-size: 12px; color: #6e7681; word-break: break-all; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img class="logo" src="whale.png" alt="DeepSeek Harness" />
+    <h1>DeepSeek Harness 启动失败</h1>
+    <div class="msg" id="msg">加载中…</div>
+    <div class="tail-label">服务日志（末尾）：</div>
+    <div class="tail" id="tail"></div>
+    <div class="actions">
+      <button class="primary" id="retry">重试启动</button>
+      <button id="browser">在浏览器中打开</button>
+      <button id="quit">退出</button>
+    </div>
+    <div class="meta" id="meta"></div>
+  </div>
+  <script>
+    const q = new URLSearchParams(location.search);
+    document.getElementById('msg').textContent = q.get('msg') || '未知错误';
+    const tail = q.get('tail') || '';
+    document.getElementById('tail').textContent = tail || '（无输出）';
+    document.getElementById('meta').textContent =
+      `端口: ${q.get('port') || '-'}     DSH_HOME: ${q.get('home') || '-'}`;
+    document.getElementById('retry').onclick = () => window.harness && window.harness.restart();
+    document.getElementById('browser').onclick = () => window.harness && window.harness.openBrowser();
+    document.getElementById('quit').onclick = () => window.harness && window.harness.quit();
+  </script>
+</body>
+</html>

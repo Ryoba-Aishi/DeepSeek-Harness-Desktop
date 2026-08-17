@@ -1,0 +1,11 @@
+dist/
+runtime/node/
+runtime/dsh/
+node_modules/
+.dsh/
+.DS_Store
+Thumbs.db
+*.log
+/.cache/
+/.codex/
+build/
